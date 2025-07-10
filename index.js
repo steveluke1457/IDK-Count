@@ -1,9 +1,23 @@
 // index.js
+const express = require('express');
 const { Client, GatewayIntentBits, Partials, Collection, Events } = require('discord.js');
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 
+// 🌐 Express Web Server for UptimeRobot ping
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('🤖 Bot is alive!');
+});
+
+app.listen(PORT, () => {
+  console.log(`🌐 Web server running at http://localhost:${PORT}`);
+});
+
+// 🤖 Discord Bot Setup
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -21,7 +35,7 @@ const countCommand = require('./commands/count');
 client.commands.set(countCommand.data.name, countCommand);
 
 client.once(Events.ClientReady, async () => {
-  console.log(`🤖 Bot is ready: ${client.user.tag}`);
+  console.log(`✅ Bot is ready: ${client.user.tag}`);
 
   // Register slash command(s) for all guilds
   const guilds = await client.guilds.fetch();
