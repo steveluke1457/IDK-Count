@@ -1,0 +1,26 @@
+name: Run Counting Bot
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start the bot
+      run: |
+        npm install -g pm2
+        pm2 start index.js --no-daemon
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
