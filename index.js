@@ -1,15 +1,20 @@
-const { Client, GatewayIntentBits, Partials, Collection, Events } = require('discord.js');
+// index.js
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 require('dotenv').config();
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ],
   partials: [Partials.Channel]
 });
 
 client.counts = new Map();
 
 client.on('ready', () => {
-  console.log(`Bot is ready: ${client.user.tag}`);
+  console.log(`🤖 Bot is ready: ${client.user.tag}`);
 });
 
 client.on('messageCreate', async message => {
